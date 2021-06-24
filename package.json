@@ -16,25 +16,20 @@
       "react-app/jest"
     ]
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.58",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "autosuggest-highlight": "^3.1.1",
     "formik": "^2.2.9",
     "leaflet": "^1.7.1",
     "react": "^17.0.2",
@@ -46,6 +41,8 @@
     "yup": "^0.32.9"
   },
   "devDependencies": {
+    "@types/autosuggest-highlight": "^3.1.1",
+    "@types/google.maps": "^3.45.3",
     "@types/leaflet": "^1.7.3",
     "@types/react": "^17.0.6",
     "@types/react-dom": "^17.0.5",
