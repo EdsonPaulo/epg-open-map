@@ -4,9 +4,10 @@ import { LatLngTuple } from 'leaflet';
 import React, { useEffect, useState } from 'react';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 
-import { ICoordinates } from './fisgar.types';
+import { ICoordinates, useStyles } from './fisgar.helpers';
 
 const FisgarMap: React.FC = () => {
+  const classes = useStyles();
   const [coordinates, setCoordinates] = useState<ICoordinates | null>();
 
   const getLocationPermission = () => {
@@ -43,23 +44,24 @@ const FisgarMap: React.FC = () => {
   const position = [coordinates.lat, coordinates.lng] as LatLngTuple;
 
   return (
-    <div>
-      <MapContainer
-        center={position}
-        zoom={coordinates.zoom || 13}
-        scrollWheelZoom={false}
-        // style={{ width: '100%', height: '100%' }}
-      >
-        <TileLayer
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <Marker position={position}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
-      </MapContainer>
+    <div style={{ width: '400px', height: '100%', position: 'relative' }}>
+      <div style={{ width: '200px', height: '200px', position: 'relative' }}>
+        <MapContainer
+          center={position}
+          zoom={coordinates.zoom || 13}
+          style={{ width: 'inherit', height: 'inherit', position: 'relative' }}
+        >
+          <TileLayer
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <Marker position={position}>
+            <Popup>
+              A pretty CSS3 popup. <br /> Easily customizable.
+            </Popup>
+          </Marker>
+        </MapContainer>
+      </div>
     </div>
   );
 };

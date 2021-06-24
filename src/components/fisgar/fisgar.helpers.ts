@@ -1,3 +1,4 @@
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import * as Yup from 'yup';
 
 import {
@@ -41,3 +42,24 @@ export const fisgarFormSchema = Yup.object().shape({
     .trim()
     .required(FormValidationMessages.Required),
 });
+
+export const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: { flexGrow: 1 },
+    formContainer: {
+      padding: 50,
+      flex: 1,
+      display: 'flex',
+      justifyContent: 'center',
+      '& > div': {
+        maxWidth: '600px',
+      },
+    },
+    title: {
+      fontWeight: 'bold',
+      textTransform: 'uppercase',
+      marginBottom: theme.spacing(5),
+    },
+    mapContainer: { background: 'green' }
+  }),
+);

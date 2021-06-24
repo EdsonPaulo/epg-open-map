@@ -1,3 +1,4 @@
+import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button/Button';
 import Grid from '@material-ui/core/Grid/Grid';
 import TextField from '@material-ui/core/TextField/TextField';
@@ -6,9 +7,10 @@ import React, { FC, useState } from 'react';
 
 import { CommonEnum } from '../../constants';
 import AddressInput from '../address-input';
-import { fisgarFormSchema, IFisgarForm } from './fisgar.types';
+import { fisgarFormSchema, IFisgarForm, useStyles } from './fisgar.helpers';
 
 const FisgarForm: FC = () => {
+  const classes = useStyles();
   const [submiting, setSubmitting] = useState(false);
 
   const handlerFisgarFormSubmit = (data: IFisgarForm) => {
@@ -26,8 +28,8 @@ const FisgarForm: FC = () => {
         name: '',
         email: '',
         cpf: '',
-        fullAddress: null,
         message: '',
+        fullAddress: null,
       },
       validationSchema: fisgarFormSchema,
       onSubmit: handlerFisgarFormSubmit,
@@ -35,6 +37,9 @@ const FisgarForm: FC = () => {
 
   return (
     <div>
+      <Typography className={classes.title} align="center" variant="h5">
+        Fisgar Imóvel
+      </Typography>
       <form method="POST" onSubmit={handleSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={12}>

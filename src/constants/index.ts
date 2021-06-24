@@ -9,6 +9,7 @@ export enum CommonEnum {
   State = 'state',
   Street = 'street',
   District = 'district',
+  Fisgar = 'fisgar',
 }
 
 export enum FormValidationMessages {
