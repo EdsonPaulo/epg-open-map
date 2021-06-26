@@ -48,13 +48,17 @@ export const useStyles = makeStyles((theme: Theme) =>
     root: { flex: 1, minHeight: '100vh' },
     formContainer: {
       padding: 50,
-      flex: 1,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
       '& > div': {
         maxWidth: '600px',
       },
+    },
+    map: {
+      width: 'inherit',
+      height: 'inherit',
+      position: 'relative',
     },
     title: {
       fontWeight: 'bold',

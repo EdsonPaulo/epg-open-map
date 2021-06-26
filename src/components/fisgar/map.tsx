@@ -45,11 +45,11 @@ const FisgarMap: React.FC = () => {
   const position = [coordinates.lat, coordinates.lng] as LatLngTuple;
 
   return (
-    <Box width="100%" height="100%" position="relative">
+    <Box minHeight="100vh" height="100%" width="100%">
       <MapContainer
         center={position}
         zoom={coordinates.zoom || 13}
-        style={{ width: 'inherit', height: 'inherit', position: 'relative' }}
+        className={classes.map}
       >
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
