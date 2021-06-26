@@ -9,16 +9,14 @@ const Fisgar: React.FC = () => {
   const classes = useStyles();
 
   return (
-    <div>
-      <Grid container className={classes.root}>
-        <Grid item xs={12} lg={6} className={classes.formContainer}>
-          <FisgarForm />
-        </Grid>
-        <Grid item xs={12} lg={6} className={classes.mapContainer}>
-          <FisgarMap />
-        </Grid>
+    <Grid container className={classes.root}>
+      <Grid item xs={12} lg={6} className={classes.formContainer}>
+        <FisgarForm />
       </Grid>
-    </div>
+      <Grid item xs={12} lg={6}>
+        <FisgarMap />
+      </Grid>
+    </Grid>
   );
 };
 

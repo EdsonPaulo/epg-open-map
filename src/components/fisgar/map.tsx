@@ -1,3 +1,4 @@
+import Box from '@material-ui/core/Box/Box';
 import Button from '@material-ui/core/Button/Button';
 import Alert from '@material-ui/lab/Alert';
 import { LatLngTuple } from 'leaflet';
@@ -8,7 +9,7 @@ import { ICoordinates, useStyles } from './fisgar.helpers';
 
 const FisgarMap: React.FC = () => {
   const classes = useStyles();
-  const [coordinates, setCoordinates] = useState<ICoordinates | null>();
+  const [coordinates, setCoordinates] = useState<ICoordinates | null>(null);
 
   const getLocationPermission = () => {
     navigator.geolocation.getCurrentPosition(
@@ -44,25 +45,23 @@ const FisgarMap: React.FC = () => {
   const position = [coordinates.lat, coordinates.lng] as LatLngTuple;
 
   return (
-    <div style={{ width: '400px', height: '100%', position: 'relative' }}>
-      <div style={{ width: '200px', height: '200px', position: 'relative' }}>
-        <MapContainer
-          center={position}
-          zoom={coordinates.zoom || 13}
-          style={{ width: 'inherit', height: 'inherit', position: 'relative' }}
-        >
-          <TileLayer
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          <Marker position={position}>
-            <Popup>
-              A pretty CSS3 popup. <br /> Easily customizable.
-            </Popup>
-          </Marker>
-        </MapContainer>
-      </div>
-    </div>
+    <Box width="100%" height="100%" position="relative">
+      <MapContainer
+        center={position}
+        zoom={coordinates.zoom || 13}
+        style={{ width: 'inherit', height: 'inherit', position: 'relative' }}
+      >
+        <TileLayer
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <Marker position={position}>
+          <Popup>
+            A pretty CSS3 popup. <br /> Easily customizable.
+          </Popup>
+        </Marker>
+      </MapContainer>
+    </Box>
   );
 };
 

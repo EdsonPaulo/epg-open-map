@@ -45,12 +45,13 @@ export const fisgarFormSchema = Yup.object().shape({
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: { flexGrow: 1 },
+    root: { flex: 1, minHeight: '100vh' },
     formContainer: {
       padding: 50,
       flex: 1,
       display: 'flex',
       justifyContent: 'center',
+      alignItems: 'center',
       '& > div': {
         maxWidth: '600px',
       },
@@ -60,6 +61,5 @@ export const useStyles = makeStyles((theme: Theme) =>
       textTransform: 'uppercase',
       marginBottom: theme.spacing(5),
     },
-    mapContainer: { background: 'green' }
   }),
 );
