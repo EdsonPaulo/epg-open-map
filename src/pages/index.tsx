@@ -4,7 +4,7 @@ import React, { FC } from 'react';
 import Fisgar from '../components/fisgar';
 
 const App: FC = () => (
-  <Box minHeight="100vh" display="flex">
+  <Box minHeight="100vh">
     <Fisgar />
   </Box>
 );
