@@ -1,5 +1,5 @@
 import { LatLngTuple } from 'leaflet';
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { useMap, useMapEvent } from 'react-leaflet';
 
 export const MapChangeView: FC<{

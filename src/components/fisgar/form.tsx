@@ -33,6 +33,7 @@ const FisgarForm: FC = () => {
 
     // AN API CALL HERE
     setTimeout(() => {
+      // eslint-disable-next-line no-console
       console.log(data, mapLayers);
       dispatch(setFisgarData(data));
       dispatch(setIsLoading(false));
