@@ -1,10 +1,21 @@
-import { combineReducers, createStore } from 'redux';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import logger from 'redux-logger';
 
-import { CommonEnum } from '../constants';
-import fisgarReducer from './reducers/fisgar/fisgar.reducer';
+import rootReducer from './root.reducer';
 
-export default createStore(
-  combineReducers({
-    [CommonEnum.Fisgar]: fisgarReducer,
+const middleware = [
+  ...getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActionPaths: ['payload.address'],
+      ignoredPaths: ['fisgarState.fisgarData'],
+    },
   }),
-);
+  logger,
+];
+
+const store = configureStore({
+  reducer: rootReducer,
+  middleware,
+});
+
+export default store;
