@@ -4,6 +4,7 @@ export enum CommonEnum {
   CPF = 'cpf',
   Address = 'address',
   Message = 'message',
+  Country = 'country',
   City = 'city',
   State = 'state',
   Street = 'street',
@@ -21,3 +22,5 @@ export enum FormValidationMessages {
 }
 
 export const RgxOnlyCharacters = /[a-zA-Z\u00C0-\u00FF ]+/i;
+
+export * from './types';

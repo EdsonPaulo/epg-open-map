@@ -6,8 +6,8 @@ import rootReducer from './root.reducer';
 const middleware = [
   ...getDefaultMiddleware({
     serializableCheck: {
-      ignoredActionPaths: ['payload.address'],
-      ignoredPaths: ['fisgarState.fisgarData'],
+      ignoredActionPaths: ['payload'],
+      ignoredPaths: ['fisgarState'],
     },
   }),
   logger,
