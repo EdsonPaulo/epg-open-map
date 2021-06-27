@@ -29,7 +29,7 @@ export const fisgarFormSchema = Yup.object().shape({
   [CommonEnum.CPF]: Yup.string()
     .trim()
     .required(FormValidationMessages.Required),
-  [CommonEnum.FullAddress]: Yup.object()
+  [CommonEnum.Address]: Yup.object()
     .nullable()
     .required(FormValidationMessages.Required),
   [CommonEnum.Message]: Yup.string()

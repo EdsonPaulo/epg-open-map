@@ -17,7 +17,11 @@ export const fisgarSlice = createSlice({
       state.isLoading = payload;
     },
     setFisgarData: (state, { payload }: PayloadAction<IFisgarData | null>) => {
-      state.fisgarData = payload ? { ...payload } : null;
+      if (payload)
+        state.fisgarData = state
+          ? { ...state.fisgarData, ...payload }
+          : { ...payload };
+      else state.fisgarData = null;
     },
     setFisgarMessage: (
       state,

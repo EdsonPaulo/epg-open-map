@@ -29,25 +29,25 @@ export const FisgarUserInfo: FC = () => {
       {fisgarData?.name && (
         <Typography>
           Nome:
-          <b>{fisgarData.name}</b>
+          <b> {fisgarData.name}</b>
         </Typography>
       )}
       {fisgarData?.email && (
         <Typography>
           Email:
-          <b>{fisgarData.email}</b>
+          <b> {fisgarData.email}</b>
         </Typography>
       )}
       {fisgarData?.cpf && (
         <Typography>
           CPF:
-          <b>{fisgarData.cpf}</b>
+          <b> {fisgarData.cpf}</b>
         </Typography>
       )}
       {fisgarData?.message && (
         <Typography>
           Mensagem:
-          <b>{fisgarData.message}</b>
+          <b> {fisgarData.message}</b>
         </Typography>
       )}
     </Box>

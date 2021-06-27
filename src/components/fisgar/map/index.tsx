@@ -43,8 +43,8 @@ const FisgarMap: FC = () => {
     <Box minHeight="100vh" height="100%" width="100%">
       <MapContainer
         fadeAnimation
-        center={coordinates}
         zoom={20}
+        center={coordinates}
         className={classes.map}
       >
         <TileLayer
