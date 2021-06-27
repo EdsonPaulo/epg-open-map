@@ -1,12 +1,13 @@
-import { Typography } from '@material-ui/core';
 import Box from '@material-ui/core/Box/Box';
 import Button from '@material-ui/core/Button/Button';
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
 import Grid from '@material-ui/core/Grid/Grid';
+import Modal from '@material-ui/core/Modal/Modal';
 import Snackbar from '@material-ui/core/Snackbar/Snackbar';
 import TextField from '@material-ui/core/TextField/TextField';
+import Typography from '@material-ui/core/Typography/Typography';
 import { useFormik } from 'formik';
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 
 import { CommonEnum } from '../../constants';
 import { useAppDispatch, useFisgarState } from '../../hooks';
@@ -17,12 +18,13 @@ import {
 } from '../../redux/fisgar';
 import AddressInput from '../address-input';
 import { fisgarFormSchema, IFisgarData, useStyles } from './fisgar.helpers';
+import FisgarUserInfo from './user-info';
 
 const FisgarForm: FC = () => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
-  const { loading, fisgarMessage } = useFisgarState();
-
+  const { loading, fisgarMessage, mapLayers } = useFisgarState();
+  const [modalOpen, setModalOpen] = useState(false);
   const handleMessageClose = () => dispatch(setFisgarMessage(null));
 
   const handlerFisgarFormSubmit = (data: IFisgarData) => {
@@ -31,8 +33,10 @@ const FisgarForm: FC = () => {
 
     // AN API CALL HERE
     setTimeout(() => {
+      console.log(data, mapLayers);
       dispatch(setFisgarData(data));
       dispatch(setIsLoading(false));
+      setModalOpen(true);
     }, 2000);
   };
 
@@ -43,15 +47,57 @@ const FisgarForm: FC = () => {
         email: '',
         cpf: '',
         message: '',
+        country: '',
+        city: '',
+        state: '',
+        district: '',
+        street: '',
         address: null,
       },
       validationSchema: fisgarFormSchema,
       onSubmit: handlerFisgarFormSubmit,
     });
 
-  const onCHangeAddress = (place: google.maps.GeocoderResult | null) => {
-    dispatch(setFisgarData({ address: place }));
-    setValues({ ...values, address: place });
+  const onChangeAddress = (place: google.maps.GeocoderResult | null) => {
+    const newPlace = {
+      address: place,
+      country:
+        place?.address_components[place?.address_components.length - 1]
+          .long_name || '',
+      city:
+        place && place?.address_components[place?.address_components.length - 2]
+          ? place.address_components[place?.address_components.length - 2]
+              .long_name
+          : '',
+      state:
+        place && place?.address_components[place?.address_components.length - 3]
+          ? place.address_components[place?.address_components.length - 3]
+              .short_name
+          : '',
+      district:
+        place && place?.address_components[place?.address_components.length - 4]
+          ? place.address_components[place?.address_components.length - 4]
+              .long_name
+          : '',
+      street:
+        place && place?.address_components[place?.address_components.length - 5]
+          ? place.address_components[place?.address_components.length - 5]
+              .long_name
+          : '',
+    };
+
+    dispatch(
+      setFisgarData({
+        ...newPlace,
+        marker: place
+          ? {
+              lat: place.geometry.location.lat(),
+              lng: place.geometry.location.lng(),
+            }
+          : undefined,
+      }),
+    );
+    setValues({ ...values, ...newPlace });
   };
 
   return (
@@ -60,7 +106,7 @@ const FisgarForm: FC = () => {
         Fisgar Imóveis
       </Typography>
 
-      <form method="POST" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <TextField
@@ -106,7 +152,7 @@ const FisgarForm: FC = () => {
 
           <Grid item xs={12}>
             <AddressInput
-              onChangeSelectedPlace={onCHangeAddress}
+              onChangeSelectedPlace={onChangeAddress}
               customRenderInput={params => (
                 <TextField
                   {...params}
@@ -168,6 +214,15 @@ const FisgarForm: FC = () => {
         message={fisgarMessage?.message}
         anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
       />
+      <Modal
+        open={modalOpen}
+        className={classes.modalContainer}
+        onClose={() => setModalOpen(false)}
+      >
+        <div className={classes.modalBody}>
+          <FisgarUserInfo />
+        </div>
+      </Modal>
     </div>
   );
 };

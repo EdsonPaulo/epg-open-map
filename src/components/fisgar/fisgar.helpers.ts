@@ -13,8 +13,12 @@ export interface IFisgarData {
   [CommonEnum.CPF]: string;
   [CommonEnum.Address]: google.maps.GeocoderResult | null;
   [CommonEnum.Message]: string;
+  [CommonEnum.Country]: string;
+  [CommonEnum.City]: string;
+  [CommonEnum.State]: string;
+  [CommonEnum.District]?: string;
+  [CommonEnum.Street]?: string;
 }
-
 export const fisgarFormSchema = Yup.object().shape({
   [CommonEnum.Name]: Yup.string()
     .trim()
@@ -32,6 +36,17 @@ export const fisgarFormSchema = Yup.object().shape({
   [CommonEnum.Address]: Yup.object()
     .nullable()
     .required(FormValidationMessages.Required),
+  [CommonEnum.Country]: Yup.string()
+    .trim()
+    .required(FormValidationMessages.Required),
+  [CommonEnum.City]: Yup.string()
+    .trim()
+    .required(FormValidationMessages.Required),
+  [CommonEnum.State]: Yup.string()
+    .trim()
+    .required(FormValidationMessages.Required),
+  [CommonEnum.District]: Yup.string().trim(),
+  [CommonEnum.Street]: Yup.string().trim(),
   [CommonEnum.Message]: Yup.string()
     .trim()
     .required(FormValidationMessages.Required),
@@ -58,7 +73,17 @@ export const useStyles = makeStyles((theme: Theme) =>
     title: {
       fontWeight: 'bold',
       textTransform: 'uppercase',
-      marginBottom: theme.spacing(5),
+      marginBottom: theme.spacing(6),
+    },
+    modalContainer: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    modalBody: {
+      minWidth: 400,
+      backgroundColor: theme.palette.background.paper,
+      padding: theme.spacing(4),
     },
   }),
 );
