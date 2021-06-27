@@ -1,45 +1,65 @@
 import { Typography } from '@material-ui/core';
+import Box from '@material-ui/core/Box/Box';
 import Button from '@material-ui/core/Button/Button';
+import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
 import Grid from '@material-ui/core/Grid/Grid';
+import Snackbar from '@material-ui/core/Snackbar/Snackbar';
 import TextField from '@material-ui/core/TextField/TextField';
 import { useFormik } from 'formik';
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 
 import { CommonEnum } from '../../constants';
+import { useAppDispatch, useFisgarState } from '../../hooks';
+import {
+  setFisgarData,
+  setFisgarMessage,
+  setIsLoading,
+} from '../../redux/fisgar';
 import AddressInput from '../address-input';
-import { fisgarFormSchema, IFisgarForm, useStyles } from './fisgar.helpers';
+import { fisgarFormSchema, IFisgarData, useStyles } from './fisgar.helpers';
 
 const FisgarForm: FC = () => {
   const classes = useStyles();
-  const [submiting, setSubmitting] = useState(false);
+  const dispatch = useAppDispatch();
+  const { loading, fisgarMessage } = useFisgarState();
 
-  const handlerFisgarFormSubmit = (data: IFisgarForm) => {
-    if (submiting) return;
+  const handleMessageClose = () => dispatch(setFisgarMessage(null));
 
+  const handlerFisgarFormSubmit = (data: IFisgarData) => {
+    if (loading) return;
+    dispatch(setIsLoading(true));
+
+    // AN API CALL HERE
     setTimeout(() => {
-      console.log(data);
-      setSubmitting(false);
-    }, 1000);
+      dispatch(setFisgarData(data));
+      dispatch(setIsLoading(false));
+    }, 2000);
   };
 
   const { handleSubmit, values, errors, setValues, handleChange, touched } =
-    useFormik<IFisgarForm>({
+    useFormik<IFisgarData>({
       initialValues: {
         name: '',
         email: '',
         cpf: '',
         message: '',
-        fullAddress: null,
+        address: null,
       },
       validationSchema: fisgarFormSchema,
       onSubmit: handlerFisgarFormSubmit,
     });
 
+  const onCHangeAddress = (place: google.maps.GeocoderResult | null) => {
+    dispatch(setFisgarData({ address: place }));
+    setValues({ ...values, address: place });
+  };
+
   return (
     <div>
       <Typography className={classes.title} align="center" variant="h5">
-        Fisgar Imóvel
+        Fisgar Imóveis
       </Typography>
+
       <form method="POST" onSubmit={handleSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
@@ -86,21 +106,18 @@ const FisgarForm: FC = () => {
 
           <Grid item xs={12}>
             <AddressInput
-              onChangeSelectedPlace={place => {
-                console.log(place);
-                setValues({ ...values, fullAddress: place });
-              }}
+              onChangeSelectedPlace={onCHangeAddress}
               customRenderInput={params => (
                 <TextField
                   {...params}
                   fullWidth
                   variant="filled"
-                  id={CommonEnum.FullAddress}
-                  name={CommonEnum.FullAddress}
-                  value={values?.fullAddress?.formatted_address ?? null}
+                  id={CommonEnum.Address}
+                  name={CommonEnum.Address}
+                  value={values?.address?.formatted_address ?? null}
                   label="Selecione o endereço"
-                  error={touched.fullAddress && Boolean(errors.fullAddress)}
-                  helperText={touched.fullAddress && errors.fullAddress}
+                  error={touched.address && Boolean(errors.address)}
+                  helperText={touched.address && errors.address}
                 />
               )}
             />
@@ -121,19 +138,36 @@ const FisgarForm: FC = () => {
               helperText={touched.message && errors.message}
             />
           </Grid>
-
-          <Grid item>
-            <Button
-              color="secondary"
-              size="large"
-              variant="contained"
-              type="submit"
-            >
-              Submeter
-            </Button>
-          </Grid>
         </Grid>
+
+        <Box
+          mt={4}
+          display="flex"
+          justifyContent="center"
+          flexDirection="column"
+          alignItems="center"
+        >
+          <Button
+            color="primary"
+            size="large"
+            variant="contained"
+            type="submit"
+            disabled={loading}
+            className={classes.submitButton}
+          >
+            Submeter
+          </Button>
+
+          {loading && <CircularProgress color="primary" />}
+        </Box>
       </form>
+
+      <Snackbar
+        open={!!fisgarMessage}
+        onClose={handleMessageClose}
+        message={fisgarMessage?.message}
+        anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
+      />
     </div>
   );
 };

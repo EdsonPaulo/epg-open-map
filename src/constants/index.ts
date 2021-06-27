@@ -3,7 +3,6 @@ export enum CommonEnum {
   Email = 'email',
   CPF = 'cpf',
   Address = 'address',
-  FullAddress = 'fullAddress',
   Message = 'message',
   City = 'city',
   State = 'state',

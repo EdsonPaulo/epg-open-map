@@ -7,17 +7,11 @@ import {
   RgxOnlyCharacters,
 } from '../../constants';
 
-export interface ICoordinates {
-  lat: number;
-  lng: number;
-  zoom: number;
-}
-
-export interface IFisgarForm {
+export interface IFisgarData {
   [CommonEnum.Name]: string;
   [CommonEnum.Email]: string;
   [CommonEnum.CPF]: string;
-  [CommonEnum.FullAddress]: google.maps.GeocoderResult | null;
+  [CommonEnum.Address]: google.maps.GeocoderResult | null;
   [CommonEnum.Message]: string;
 }
 
@@ -60,6 +54,7 @@ export const useStyles = makeStyles((theme: Theme) =>
       height: 'inherit',
       position: 'relative',
     },
+    submitButton: { marginBottom: theme.spacing(2) },
     title: {
       fontWeight: 'bold',
       textTransform: 'uppercase',
